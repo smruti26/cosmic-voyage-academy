@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Menu, X, Rocket } from "lucide-react";
+import { JourneyLauncher } from "./JourneyMode";
 
 const links = [
   { to: "/", label: "Home" },
@@ -38,6 +39,9 @@ export function SpaceNav() {
               </li>
             ))}
           </ul>
+          <div className="hidden md:flex items-center gap-2">
+            <JourneyLauncher />
+          </div>
           <button
             className="md:hidden p-2 text-foreground"
             onClick={() => setOpen((v) => !v)}
