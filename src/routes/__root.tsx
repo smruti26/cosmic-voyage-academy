@@ -13,6 +13,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SpaceNav } from "../components/SpaceNav";
 import { SpaceFooter } from "../components/SpaceFooter";
+import { JourneyProvider } from "../components/JourneyMode";
 
 function NotFoundComponent() {
   return (
@@ -111,11 +112,13 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <SpaceNav />
-      <main className="min-h-screen">
-        <Outlet />
-      </main>
-      <SpaceFooter />
+      <JourneyProvider>
+        <SpaceNav />
+        <main className="min-h-screen">
+          <Outlet />
+        </main>
+        <SpaceFooter />
+      </JourneyProvider>
     </QueryClientProvider>
   );
 }

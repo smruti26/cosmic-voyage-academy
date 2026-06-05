@@ -1,0 +1,2 @@
+import { useRef } from "react";
+import { useFrame } from "@react-function/fiber".replace as never; // placeholder to fail loudly if mis-imported

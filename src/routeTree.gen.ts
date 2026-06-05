@@ -16,6 +16,7 @@ import { Route as IsroRouteImport } from './routes/isro'
 import { Route as GalaxyRouteImport } from './routes/galaxy'
 import { Route as BlackHolesRouteImport } from './routes/black-holes'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as IsroMissionRouteImport } from './routes/isro.$mission'
 
 const StarsRoute = StarsRouteImport.update({
   id: '/stars',
@@ -52,34 +53,42 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const IsroMissionRoute = IsroMissionRouteImport.update({
+  id: '/$mission',
+  path: '/$mission',
+  getParentRoute: () => IsroRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/black-holes': typeof BlackHolesRoute
   '/galaxy': typeof GalaxyRoute
-  '/isro': typeof IsroRoute
+  '/isro': typeof IsroRouteWithChildren
   '/planets': typeof PlanetsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/stars': typeof StarsRoute
+  '/isro/$mission': typeof IsroMissionRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/black-holes': typeof BlackHolesRoute
   '/galaxy': typeof GalaxyRoute
-  '/isro': typeof IsroRoute
+  '/isro': typeof IsroRouteWithChildren
   '/planets': typeof PlanetsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/stars': typeof StarsRoute
+  '/isro/$mission': typeof IsroMissionRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/black-holes': typeof BlackHolesRoute
   '/galaxy': typeof GalaxyRoute
-  '/isro': typeof IsroRoute
+  '/isro': typeof IsroRouteWithChildren
   '/planets': typeof PlanetsRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/stars': typeof StarsRoute
+  '/isro/$mission': typeof IsroMissionRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -91,6 +100,7 @@ export interface FileRouteTypes {
     | '/planets'
     | '/sitemap.xml'
     | '/stars'
+    | '/isro/$mission'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -100,6 +110,7 @@ export interface FileRouteTypes {
     | '/planets'
     | '/sitemap.xml'
     | '/stars'
+    | '/isro/$mission'
   id:
     | '__root__'
     | '/'
@@ -109,13 +120,14 @@ export interface FileRouteTypes {
     | '/planets'
     | '/sitemap.xml'
     | '/stars'
+    | '/isro/$mission'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BlackHolesRoute: typeof BlackHolesRoute
   GalaxyRoute: typeof GalaxyRoute
-  IsroRoute: typeof IsroRoute
+  IsroRoute: typeof IsroRouteWithChildren
   PlanetsRoute: typeof PlanetsRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   StarsRoute: typeof StarsRoute
@@ -172,14 +184,31 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/isro/$mission': {
+      id: '/isro/$mission'
+      path: '/$mission'
+      fullPath: '/isro/$mission'
+      preLoaderRoute: typeof IsroMissionRouteImport
+      parentRoute: typeof IsroRoute
+    }
   }
 }
+
+interface IsroRouteChildren {
+  IsroMissionRoute: typeof IsroMissionRoute
+}
+
+const IsroRouteChildren: IsroRouteChildren = {
+  IsroMissionRoute: IsroMissionRoute,
+}
+
+const IsroRouteWithChildren = IsroRoute._addFileChildren(IsroRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BlackHolesRoute: BlackHolesRoute,
   GalaxyRoute: GalaxyRoute,
-  IsroRoute: IsroRoute,
+  IsroRoute: IsroRouteWithChildren,
   PlanetsRoute: PlanetsRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   StarsRoute: StarsRoute,
