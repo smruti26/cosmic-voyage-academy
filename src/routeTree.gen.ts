@@ -9,8 +9,44 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as StarsRouteImport } from './routes/stars'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as PlanetsRouteImport } from './routes/planets'
+import { Route as IsroRouteImport } from './routes/isro'
+import { Route as GalaxyRouteImport } from './routes/galaxy'
+import { Route as BlackHolesRouteImport } from './routes/black-holes'
 import { Route as IndexRouteImport } from './routes/index'
 
+const StarsRoute = StarsRouteImport.update({
+  id: '/stars',
+  path: '/stars',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlanetsRoute = PlanetsRouteImport.update({
+  id: '/planets',
+  path: '/planets',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IsroRoute = IsroRouteImport.update({
+  id: '/isro',
+  path: '/isro',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GalaxyRoute = GalaxyRouteImport.update({
+  id: '/galaxy',
+  path: '/galaxy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlackHolesRoute = BlackHolesRouteImport.update({
+  id: '/black-holes',
+  path: '/black-holes',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +55,116 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/black-holes': typeof BlackHolesRoute
+  '/galaxy': typeof GalaxyRoute
+  '/isro': typeof IsroRoute
+  '/planets': typeof PlanetsRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/stars': typeof StarsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/black-holes': typeof BlackHolesRoute
+  '/galaxy': typeof GalaxyRoute
+  '/isro': typeof IsroRoute
+  '/planets': typeof PlanetsRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/stars': typeof StarsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/black-holes': typeof BlackHolesRoute
+  '/galaxy': typeof GalaxyRoute
+  '/isro': typeof IsroRoute
+  '/planets': typeof PlanetsRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/stars': typeof StarsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/black-holes'
+    | '/galaxy'
+    | '/isro'
+    | '/planets'
+    | '/sitemap.xml'
+    | '/stars'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/black-holes'
+    | '/galaxy'
+    | '/isro'
+    | '/planets'
+    | '/sitemap.xml'
+    | '/stars'
+  id:
+    | '__root__'
+    | '/'
+    | '/black-holes'
+    | '/galaxy'
+    | '/isro'
+    | '/planets'
+    | '/sitemap.xml'
+    | '/stars'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BlackHolesRoute: typeof BlackHolesRoute
+  GalaxyRoute: typeof GalaxyRoute
+  IsroRoute: typeof IsroRoute
+  PlanetsRoute: typeof PlanetsRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  StarsRoute: typeof StarsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/stars': {
+      id: '/stars'
+      path: '/stars'
+      fullPath: '/stars'
+      preLoaderRoute: typeof StarsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/planets': {
+      id: '/planets'
+      path: '/planets'
+      fullPath: '/planets'
+      preLoaderRoute: typeof PlanetsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/isro': {
+      id: '/isro'
+      path: '/isro'
+      fullPath: '/isro'
+      preLoaderRoute: typeof IsroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/galaxy': {
+      id: '/galaxy'
+      path: '/galaxy'
+      fullPath: '/galaxy'
+      preLoaderRoute: typeof GalaxyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/black-holes': {
+      id: '/black-holes'
+      path: '/black-holes'
+      fullPath: '/black-holes'
+      preLoaderRoute: typeof BlackHolesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,17 +177,13 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BlackHolesRoute: BlackHolesRoute,
+  GalaxyRoute: GalaxyRoute,
+  IsroRoute: IsroRoute,
+  PlanetsRoute: PlanetsRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
+  StarsRoute: StarsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

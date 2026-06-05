@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <radialGradient id="sun" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fff3c4"/>
+      <stop offset="60%" stop-color="#ffb347"/>
+      <stop offset="100%" stop-color="#ff5e1a"/>
+    </radialGradient>
+    <radialGradient id="bg" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#1a1340"/>
+      <stop offset="100%" stop-color="#05030f"/>
+    </radialGradient>
+  </defs>
+  <circle cx="32" cy="32" r="32" fill="url(#bg)"/>
+  <g fill="#ffffff">
+    <circle cx="10" cy="14" r="0.8"><animate attributeName="opacity" values="0.2;1;0.2" dur="2s" repeatCount="indefinite"/></circle>
+    <circle cx="52" cy="10" r="0.6"><animate attributeName="opacity" values="1;0.2;1" dur="2.4s" repeatCount="indefinite"/></circle>
+    <circle cx="56" cy="48" r="0.7"><animate attributeName="opacity" values="0.3;1;0.3" dur="1.8s" repeatCount="indefinite"/></circle>
+    <circle cx="8" cy="52" r="0.5"><animate attributeName="opacity" values="1;0.2;1" dur="2.2s" repeatCount="indefinite"/></circle>
+  </g>
+  <circle cx="32" cy="32" r="7" fill="url(#sun)">
+    <animate attributeName="r" values="7;7.6;7" dur="3s" repeatCount="indefinite"/>
+  </circle>
+  <g fill="none" stroke="#5b8dff" stroke-opacity="0.35" stroke-width="0.5">
+    <ellipse cx="32" cy="32" rx="14" ry="5"/>
+    <ellipse cx="32" cy="32" rx="22" ry="8"/>
+  </g>
+  <g>
+    <circle r="1.6" fill="#3a8dff">
+      <animateMotion dur="6s" repeatCount="indefinite"
+        path="M 46,32 A 14,5 0 1 1 18,32 A 14,5 0 1 1 46,32"/>
+    </circle>
+    <circle r="1.2" fill="#d2532f">
+      <animateMotion dur="10s" repeatCount="indefinite"
+        path="M 54,32 A 22,8 0 1 1 10,32 A 22,8 0 1 1 54,32"/>
+    </circle>
+  </g>
+</svg>
