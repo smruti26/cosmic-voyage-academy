@@ -65,6 +65,7 @@ export function SpaceNav() {
                 {l.label}
               </Link>
             ))}
+            <div className="px-2 pt-2"><JourneyLauncher className="w-full justify-center" /></div>
           </div>
         )}
       </div>
