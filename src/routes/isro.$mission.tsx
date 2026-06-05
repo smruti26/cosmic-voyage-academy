@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { ClientCanvas } from "@/components/three/ClientCanvas";
 import { StarField } from "@/components/three/StarField";
 import { Spacecraft3D } from "@/components/three/Spacecraft3D";
-import { getMission, MISSIONS } from "@/data/missions";
+import { getMission, MISSIONS, type Mission } from "@/data/missions";
 import { ArrowLeft, ArrowRight, CheckCircle2, Circle, Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/isro/$mission")({
@@ -37,7 +37,7 @@ export const Route = createFileRoute("/isro/$mission")({
 });
 
 function MissionPage() {
-  const { mission } = Route.useLoaderData();
+  const { mission } = Route.useLoaderData() as { mission: Mission };
   const storageKey = `cosmoverse:checklist:${mission.slug}`;
   const [checked, setChecked] = useState<Record<number, boolean>>({});
 
