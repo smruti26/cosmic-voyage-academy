@@ -14,6 +14,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SpaceNav } from "../components/SpaceNav";
 import { SpaceFooter } from "../components/SpaceFooter";
 import { JourneyProvider } from "../components/JourneyMode";
+import { SpaceTutor } from "../components/SpaceTutor";
 
 function NotFoundComponent() {
   return (
@@ -118,6 +119,7 @@ function RootComponent() {
           <Outlet />
         </main>
         <SpaceFooter />
+        <SpaceTutor />
       </JourneyProvider>
     </QueryClientProvider>
   );

@@ -6,10 +6,12 @@ import { JourneyLauncher } from "./JourneyMode";
 const links = [
   { to: "/", label: "Home" },
   { to: "/planets", label: "Planets" },
+  { to: "/compare", label: "Compare" },
   { to: "/galaxy", label: "Galaxy" },
   { to: "/black-holes", label: "Black Holes" },
   { to: "/stars", label: "Stars" },
   { to: "/isro", label: "ISRO" },
+  { to: "/ai-lab", label: "AI Lab" },
 ] as const;
 
 export function SpaceNav() {
