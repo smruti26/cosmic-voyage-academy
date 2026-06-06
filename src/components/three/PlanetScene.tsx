@@ -2,6 +2,8 @@ import { useRef, useState, useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Html } from "@react-three/drei";
 import * as THREE from "three";
+import { HotspotQuiz } from "@/components/HotspotQuiz";
+
 
 export interface Hotspot {
   id: string;
@@ -105,10 +107,11 @@ export function PlanetScene({ planetKey, color, ring, ringColor = "#d6b272", emi
             zIndexRange={[20, 0]}
             style={{ pointerEvents: "auto" }}
           >
-            <div className="glass rounded-xl p-3 w-56 shadow-nebula animate-fade-in">
+            <div className="glass rounded-xl p-3 w-64 shadow-nebula animate-fade-in">
               <div className="text-[10px] uppercase tracking-[0.25em] text-accent">Discover</div>
               <div className="mt-1 text-sm font-semibold text-foreground">{active.title}</div>
               <p className="mt-1 text-xs text-muted-foreground leading-relaxed">{active.fact}</p>
+              <HotspotQuiz hotspotId={active.id} planetKey={planetKey} />
               <button
                 onClick={() => setActiveId(null)}
                 className="mt-2 text-[11px] text-primary hover:underline"

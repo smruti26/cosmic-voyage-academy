@@ -21,6 +21,8 @@ export const Route = createFileRoute("/sitemap.xml")({
           { path: "/black-holes", changefreq: "monthly", priority: "0.9" },
           { path: "/stars", changefreq: "monthly", priority: "0.9" },
           { path: "/isro", changefreq: "monthly", priority: "0.9" },
+          { path: "/compare", changefreq: "monthly", priority: "0.8" },
+          { path: "/ai-lab", changefreq: "monthly", priority: "0.8" },
           ...MISSIONS.map((m) => ({ path: `/isro/${m.slug}`, changefreq: "monthly" as const, priority: "0.8" })),
         ];
         const urls = entries.map((e) =>

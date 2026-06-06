@@ -14,7 +14,9 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as PlanetsRouteImport } from './routes/planets'
 import { Route as IsroRouteImport } from './routes/isro'
 import { Route as GalaxyRouteImport } from './routes/galaxy'
+import { Route as CompareRouteImport } from './routes/compare'
 import { Route as BlackHolesRouteImport } from './routes/black-holes'
+import { Route as AiLabRouteImport } from './routes/ai-lab'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as IsroMissionRouteImport } from './routes/isro.$mission'
 
@@ -43,9 +45,19 @@ const GalaxyRoute = GalaxyRouteImport.update({
   path: '/galaxy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CompareRoute = CompareRouteImport.update({
+  id: '/compare',
+  path: '/compare',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BlackHolesRoute = BlackHolesRouteImport.update({
   id: '/black-holes',
   path: '/black-holes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiLabRoute = AiLabRouteImport.update({
+  id: '/ai-lab',
+  path: '/ai-lab',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -61,7 +73,9 @@ const IsroMissionRoute = IsroMissionRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ai-lab': typeof AiLabRoute
   '/black-holes': typeof BlackHolesRoute
+  '/compare': typeof CompareRoute
   '/galaxy': typeof GalaxyRoute
   '/isro': typeof IsroRouteWithChildren
   '/planets': typeof PlanetsRoute
@@ -71,7 +85,9 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ai-lab': typeof AiLabRoute
   '/black-holes': typeof BlackHolesRoute
+  '/compare': typeof CompareRoute
   '/galaxy': typeof GalaxyRoute
   '/isro': typeof IsroRouteWithChildren
   '/planets': typeof PlanetsRoute
@@ -82,7 +98,9 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/ai-lab': typeof AiLabRoute
   '/black-holes': typeof BlackHolesRoute
+  '/compare': typeof CompareRoute
   '/galaxy': typeof GalaxyRoute
   '/isro': typeof IsroRouteWithChildren
   '/planets': typeof PlanetsRoute
@@ -94,7 +112,9 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/ai-lab'
     | '/black-holes'
+    | '/compare'
     | '/galaxy'
     | '/isro'
     | '/planets'
@@ -104,7 +124,9 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/ai-lab'
     | '/black-holes'
+    | '/compare'
     | '/galaxy'
     | '/isro'
     | '/planets'
@@ -114,7 +136,9 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/ai-lab'
     | '/black-holes'
+    | '/compare'
     | '/galaxy'
     | '/isro'
     | '/planets'
@@ -125,7 +149,9 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AiLabRoute: typeof AiLabRoute
   BlackHolesRoute: typeof BlackHolesRoute
+  CompareRoute: typeof CompareRoute
   GalaxyRoute: typeof GalaxyRoute
   IsroRoute: typeof IsroRouteWithChildren
   PlanetsRoute: typeof PlanetsRoute
@@ -170,11 +196,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GalaxyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/compare': {
+      id: '/compare'
+      path: '/compare'
+      fullPath: '/compare'
+      preLoaderRoute: typeof CompareRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/black-holes': {
       id: '/black-holes'
       path: '/black-holes'
       fullPath: '/black-holes'
       preLoaderRoute: typeof BlackHolesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai-lab': {
+      id: '/ai-lab'
+      path: '/ai-lab'
+      fullPath: '/ai-lab'
+      preLoaderRoute: typeof AiLabRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -206,7 +246,9 @@ const IsroRouteWithChildren = IsroRoute._addFileChildren(IsroRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AiLabRoute: AiLabRoute,
   BlackHolesRoute: BlackHolesRoute,
+  CompareRoute: CompareRoute,
   GalaxyRoute: GalaxyRoute,
   IsroRoute: IsroRouteWithChildren,
   PlanetsRoute: PlanetsRoute,
