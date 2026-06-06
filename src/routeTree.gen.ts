@@ -16,6 +16,7 @@ import { Route as IsroRouteImport } from './routes/isro'
 import { Route as GalaxyRouteImport } from './routes/galaxy'
 import { Route as CompareRouteImport } from './routes/compare'
 import { Route as BlackHolesRouteImport } from './routes/black-holes'
+import { Route as AiLabRouteImport } from './routes/ai-lab'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as IsroMissionRouteImport } from './routes/isro.$mission'
 
@@ -54,6 +55,11 @@ const BlackHolesRoute = BlackHolesRouteImport.update({
   path: '/black-holes',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AiLabRoute = AiLabRouteImport.update({
+  id: '/ai-lab',
+  path: '/ai-lab',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -67,6 +73,7 @@ const IsroMissionRoute = IsroMissionRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ai-lab': typeof AiLabRoute
   '/black-holes': typeof BlackHolesRoute
   '/compare': typeof CompareRoute
   '/galaxy': typeof GalaxyRoute
@@ -78,6 +85,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ai-lab': typeof AiLabRoute
   '/black-holes': typeof BlackHolesRoute
   '/compare': typeof CompareRoute
   '/galaxy': typeof GalaxyRoute
@@ -90,6 +98,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/ai-lab': typeof AiLabRoute
   '/black-holes': typeof BlackHolesRoute
   '/compare': typeof CompareRoute
   '/galaxy': typeof GalaxyRoute
@@ -103,6 +112,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/ai-lab'
     | '/black-holes'
     | '/compare'
     | '/galaxy'
@@ -114,6 +124,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/ai-lab'
     | '/black-holes'
     | '/compare'
     | '/galaxy'
@@ -125,6 +136,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/ai-lab'
     | '/black-holes'
     | '/compare'
     | '/galaxy'
@@ -137,6 +149,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AiLabRoute: typeof AiLabRoute
   BlackHolesRoute: typeof BlackHolesRoute
   CompareRoute: typeof CompareRoute
   GalaxyRoute: typeof GalaxyRoute
@@ -197,6 +210,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlackHolesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ai-lab': {
+      id: '/ai-lab'
+      path: '/ai-lab'
+      fullPath: '/ai-lab'
+      preLoaderRoute: typeof AiLabRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -226,6 +246,7 @@ const IsroRouteWithChildren = IsroRoute._addFileChildren(IsroRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AiLabRoute: AiLabRoute,
   BlackHolesRoute: BlackHolesRoute,
   CompareRoute: CompareRoute,
   GalaxyRoute: GalaxyRoute,
@@ -237,3 +258,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
