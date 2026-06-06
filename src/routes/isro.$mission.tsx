@@ -1,10 +1,10 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
 import { ClientCanvas } from "@/components/three/ClientCanvas";
 import { StarField } from "@/components/three/StarField";
 import { Spacecraft3D } from "@/components/three/Spacecraft3D";
 import { getMission, MISSIONS, type Mission } from "@/data/missions";
-import { ArrowLeft, ArrowRight, CheckCircle2, Circle, Sparkles } from "lucide-react";
+import { useProfile } from "@/lib/profile";
+import { ArrowLeft, ArrowRight, CheckCircle2, Circle, Sparkles, Award } from "lucide-react";
 
 export const Route = createFileRoute("/isro/$mission")({
   loader: ({ params }) => {
@@ -38,30 +38,21 @@ export const Route = createFileRoute("/isro/$mission")({
 
 function MissionPage() {
   const { mission } = Route.useLoaderData() as { mission: Mission };
-  const storageKey = `cosmoverse:checklist:${mission.slug}`;
-  const [checked, setChecked] = useState<Record<number, boolean>>({});
-
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem(storageKey);
-      if (raw) setChecked(JSON.parse(raw));
-    } catch { /* ignore */ }
-  }, [storageKey]);
+  const { profile, setMissionStep } = useProfile();
+  const checkedArr = profile.missions[mission.slug] ?? new Array(mission.checklist.length).fill(false);
 
   const toggle = (i: number) => {
-    setChecked((prev) => {
-      const next = { ...prev, [i]: !prev[i] };
-      try { localStorage.setItem(storageKey, JSON.stringify(next)); } catch { /* ignore */ }
-      return next;
-    });
+    setMissionStep(mission.slug, i, !checkedArr[i], mission.checklist.length);
   };
 
-  const completed = mission.checklist.filter((_, i) => checked[i]).length;
+  const completed = checkedArr.filter(Boolean).length;
   const pct = Math.round((completed / mission.checklist.length) * 100);
+  const earned = profile.badges.includes(`mission:${mission.slug}`);
 
   const idx = MISSIONS.findIndex((m) => m.slug === mission.slug);
   const prev = MISSIONS[(idx - 1 + MISSIONS.length) % MISSIONS.length];
   const next = MISSIONS[(idx + 1) % MISSIONS.length];
+
 
   return (
     <div className="relative pt-28 pb-20">
