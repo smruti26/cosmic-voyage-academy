@@ -156,8 +156,9 @@ function MissionPage() {
                 })}
               </ul>
               {pct === 100 && (
-                <div className="mt-4 rounded-xl bg-primary/15 px-3 py-2 text-sm text-foreground">
-                  🚀 Mission accomplished! You've earned your Vyomanaut badge.
+                <div className="mt-4 rounded-xl bg-primary/15 px-3 py-3 text-sm text-foreground flex items-center gap-2">
+                  <Award className="h-5 w-5 text-accent" />
+                  <span>🚀 Mission accomplished! {earned ? "Vyomanaut badge saved to your profile." : "Earning your Vyomanaut badge…"}</span>
                 </div>
               )}
             </div>
