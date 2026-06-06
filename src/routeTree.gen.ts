@@ -14,6 +14,7 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as PlanetsRouteImport } from './routes/planets'
 import { Route as IsroRouteImport } from './routes/isro'
 import { Route as GalaxyRouteImport } from './routes/galaxy'
+import { Route as CompareRouteImport } from './routes/compare'
 import { Route as BlackHolesRouteImport } from './routes/black-holes'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as IsroMissionRouteImport } from './routes/isro.$mission'
@@ -43,6 +44,11 @@ const GalaxyRoute = GalaxyRouteImport.update({
   path: '/galaxy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CompareRoute = CompareRouteImport.update({
+  id: '/compare',
+  path: '/compare',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BlackHolesRoute = BlackHolesRouteImport.update({
   id: '/black-holes',
   path: '/black-holes',
@@ -62,6 +68,7 @@ const IsroMissionRoute = IsroMissionRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/black-holes': typeof BlackHolesRoute
+  '/compare': typeof CompareRoute
   '/galaxy': typeof GalaxyRoute
   '/isro': typeof IsroRouteWithChildren
   '/planets': typeof PlanetsRoute
@@ -72,6 +79,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/black-holes': typeof BlackHolesRoute
+  '/compare': typeof CompareRoute
   '/galaxy': typeof GalaxyRoute
   '/isro': typeof IsroRouteWithChildren
   '/planets': typeof PlanetsRoute
@@ -83,6 +91,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/black-holes': typeof BlackHolesRoute
+  '/compare': typeof CompareRoute
   '/galaxy': typeof GalaxyRoute
   '/isro': typeof IsroRouteWithChildren
   '/planets': typeof PlanetsRoute
@@ -95,6 +104,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/black-holes'
+    | '/compare'
     | '/galaxy'
     | '/isro'
     | '/planets'
@@ -105,6 +115,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/black-holes'
+    | '/compare'
     | '/galaxy'
     | '/isro'
     | '/planets'
@@ -115,6 +126,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/black-holes'
+    | '/compare'
     | '/galaxy'
     | '/isro'
     | '/planets'
@@ -126,6 +138,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BlackHolesRoute: typeof BlackHolesRoute
+  CompareRoute: typeof CompareRoute
   GalaxyRoute: typeof GalaxyRoute
   IsroRoute: typeof IsroRouteWithChildren
   PlanetsRoute: typeof PlanetsRoute
@@ -170,6 +183,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GalaxyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/compare': {
+      id: '/compare'
+      path: '/compare'
+      fullPath: '/compare'
+      preLoaderRoute: typeof CompareRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/black-holes': {
       id: '/black-holes'
       path: '/black-holes'
@@ -207,6 +227,7 @@ const IsroRouteWithChildren = IsroRoute._addFileChildren(IsroRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BlackHolesRoute: BlackHolesRoute,
+  CompareRoute: CompareRoute,
   GalaxyRoute: GalaxyRoute,
   IsroRoute: IsroRouteWithChildren,
   PlanetsRoute: PlanetsRoute,
@@ -216,3 +237,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
