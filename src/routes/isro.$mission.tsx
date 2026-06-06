@@ -82,6 +82,13 @@ function MissionPage() {
                 </div>
               ))}
             </dl>
+
+            <div className="mt-6 inline-flex items-center gap-2 rounded-full glass px-3 py-1.5 text-xs">
+              <Award className={`h-4 w-4 ${earned ? "text-accent" : "text-muted-foreground"}`} />
+              <span className="text-muted-foreground">Mission progress:</span>
+              <span className="font-semibold">{pct}%</span>
+              {earned && <span className="ml-1 text-accent">· Vyomanaut badge earned ✨</span>}
+            </div>
           </div>
 
           <div className="relative aspect-square w-full glass rounded-3xl overflow-hidden">
