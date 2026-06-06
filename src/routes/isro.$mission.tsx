@@ -135,7 +135,7 @@ function MissionPage() {
               </div>
               <ul className="mt-5 space-y-2">
                 {mission.checklist.map((item, i) => {
-                  const done = !!checked[i];
+                  const done = !!checkedArr[i];
                   return (
                     <li key={i}>
                       <button
